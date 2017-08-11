@@ -1,0 +1,28 @@
+{
+    "name": "filmbot/google-sitemap-generator",
+    "description": "Filmbot fork of google-sitemap-generator.",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Filmbot",
+            "email": "hi@filmbot.com",
+            "homepage": "http://www.filmbot.com",
+            "role": "Developer"
+        }
+    ],
+    "keywords": ["wordpress", "plugin"],
+    "homepage": "https://github.com/Filmbot/google-sitemap-generator",
+    "type": "wordpress-plugin",
+    "support": {
+        "issues": "https://github.com/Filmbot/google-sitemap-generator/issues",
+        "source": "https://github.com/Filmbot/google-sitemap-generator/"
+    },
+    "require": {
+        "php": ">5.2.4"
+    },
+    "suggest": {
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
+    }
+}
