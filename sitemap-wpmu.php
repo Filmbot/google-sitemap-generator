@@ -22,7 +22,6 @@
 
 if(!defined('WPINC')) return;
 
-$gsgFile = dirname(__FILE__) . "/google-sitemap-generator/sitemap.php";
-
-if(file_exists($gsgFile)) require_once($gsgFile);
-else trigger_error("Google Sitemap Generator was loaded via mu-plugins directory, but the plugin was not found under $gsgFile",E_USER_WARNING);
+if(file_exists(dirname(__FILE__) . "/google-sitemap-generator/sitemap.php")) require_once(dirname(__FILE__) . "/google-sitemap-generator/sitemap.php");
+elseif(file_exists(dirname(__FILE__) . "/sitemap.php")) require_once(dirname(__FILE__) . "/sitemap.php");
+else trigger_error("Google Sitemap Generator was loaded via mu-plugins directory, but the plugin was not found",E_USER_WARNING);

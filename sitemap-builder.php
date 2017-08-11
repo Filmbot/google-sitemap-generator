@@ -91,7 +91,13 @@ class GoogleSitemapGeneratorStandardBuilder {
 			$exCatSQL = "";
 			if(count($excludedCategoryIDs) > 0) {
 				$exCatSQL = "AND ( p.ID NOT IN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ( SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id IN ( " . implode(",", $excludedCategoryIDs) . "))))";
-			}
+            }
+
+            /**
+             * Allows for custom SQL to filter the posts
+             * @since 4.0.9.1
+             */
+            $customSQL = apply_filters('sm_post_custom_where_sql');
 
 			//Statement to query the actual posts for this post type
 			$qs = "
@@ -117,6 +123,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 					AND MONTH(p.post_date_gmt) = %d
 					{$exPostSQL}
 					{$exCatSQL}
+					{$customSQL}
 				ORDER BY
 					p.post_date_gmt DESC
 			";
@@ -132,7 +139,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 					AND p.post_type = '%s'
 					AND p.post_status = 'publish'
 					{$exPostSQL}
-					{$exCatSQL}
+					{$customSQL}
 			";
 
 			$q = $wpdb->prepare($qs, $postType, $year, $month);
@@ -157,7 +164,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 					$cacheKey = __CLASS__  . "::totalPostCount::$postType";
 					$totalPostCount = wp_cache_get($cacheKey,'sitemap');
 					if($totalPostCount === false) {
-						$totalPostCount = $wpdb->get_var($wpdb->prepare($qsc,$postType));
+						$totalPostCount = $wpdb->get_var($wpdb->prepare($qsc, $postType));
 						wp_cache_add($cacheKey,$totalPostCount, 'sitemap', 20);
 					}
 
