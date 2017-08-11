@@ -516,6 +516,14 @@ class GoogleSitemapGeneratorStandardBuilder {
 				$exCatSQL = "AND ( p.ID NOT IN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN (" . implode(",", $excludedCategoryIDs) . ")))";
 			}
 
+            /**
+             * Allows for custom SQL to filter the posts
+             * @since 4.0.9.1
+             */
+			$customSQL = apply_filters('sm_post_custom_where_sql');
+
+			error_log("CUSTOM SQL: $customSQL");
+
 			foreach($enabledPostTypes AS $postType) {
 				$q = "
 					SELECT
@@ -531,6 +539,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 						AND p.post_status = 'publish'
 						$exPostSQL
 						$exCatSQL
+						$customSQL
 					GROUP BY
 						YEAR(p.post_date_gmt),
 						MONTH(p.post_date_gmt)
