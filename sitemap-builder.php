@@ -97,7 +97,7 @@ class GoogleSitemapGeneratorStandardBuilder {
              * Allows for custom SQL to filter the posts
              * @since 4.0.9.1
              */
-            $customSQL = apply_filters('sm_post_custom_where_sql');
+            $customSQL = apply_filters('sm_post_custom_where_sql', 'AND 1=1');
 
 			//Statement to query the actual posts for this post type
 			$qs = "
@@ -520,7 +520,7 @@ class GoogleSitemapGeneratorStandardBuilder {
              * Allows for custom SQL to filter the posts
              * @since 4.0.9.1
              */
-			$customSQL = apply_filters('sm_post_custom_where_sql');
+			$customSQL = apply_filters('sm_post_custom_where_sql', 'AND 1=1');
 
 			error_log("CUSTOM SQL: $customSQL");
 
